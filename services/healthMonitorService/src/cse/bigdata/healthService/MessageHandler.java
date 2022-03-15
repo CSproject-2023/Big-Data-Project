@@ -6,9 +6,11 @@ import org.apache.thrift.TException;
 
 public class MessageHandler implements HealthMessage.Iface {
 
+    private int counter= 0;
+
     @Override
     public void sendHealthMessage(Message message) throws TException {
-        System.out.println("Message Received!");
-        System.out.println(message);
+        counter++;
+        System.out.println(counter);
     }
 }

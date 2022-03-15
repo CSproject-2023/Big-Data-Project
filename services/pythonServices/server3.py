@@ -10,9 +10,9 @@ from thrift.transport import TTransport
 from thrift.protocol import TBinaryProtocol
 
 
-RAM_MAX_SIZE= 6
-DISK_MAX_SIZE=800
-SERVICE_NAME= 'Server2'
+RAM_MAX_SIZE= 16
+DISK_MAX_SIZE=2048
+SERVICE_NAME= 'Server3'
 def main():
     # Make socket
     while True:
@@ -28,7 +28,7 @@ def main():
             transport.open()
         except :
             print('Connection error! Trying again...')
-            sleep(5)
+            sleep(1)
             continue
             
 
@@ -45,7 +45,7 @@ def main():
         client.sendHealthMessage(message)
         print('Sent Successfully!')
         transport.close()
-        # sleep5)
+        sleep(0.3)
 
 
 if __name__ == '__main__':

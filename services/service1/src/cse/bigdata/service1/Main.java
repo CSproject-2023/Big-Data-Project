@@ -26,14 +26,14 @@ public class Main {
                 transport.open();
             }catch (Exception e){
                 System.out.println("Connection error");
-                Thread.sleep(3000);
+                Thread.sleep(300);
                 continue;
             }
             TProtocol protocol = new  TBinaryProtocol(transport);
             HealthMessage.Client client = new HealthMessage.Client(protocol);
             handleSending(client);
             System.out.println("Sent!");
-            Thread.sleep(3000);
+            Thread.sleep(500);
         }
     }
 
