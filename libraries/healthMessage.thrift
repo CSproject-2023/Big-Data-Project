@@ -1,5 +1,5 @@
 namespace java healthMessage
-namespace python healthMessage
+namespace py healthMessage
 
 
 struct RamData{
