@@ -31,20 +31,20 @@ public class HealthMonitorServer {
     public static HealthMessage.Processor processor;
 
     public static void main(String [] args) throws IOException {
-//        try {
-//            handler = new MessageHandler();
-//            processor = new HealthMessage.Processor(handler);
-//
-//            Runnable simple = new Runnable() {
-//                public void run() {
-//                    simple(processor);
-//                }
-//            };
-//            new Thread(simple).start();
-////            new Thread(secure).start();
-//        } catch (Exception x) {
-//            x.printStackTrace();
-//        }
+        try {
+            handler = new MessageHandler();
+            processor = new HealthMessage.Processor(handler);
+
+            Runnable simple = new Runnable() {
+                public void run() {
+                    simple(processor);
+                }
+            };
+            new Thread(simple).start();
+//            new Thread(secure).start();
+        } catch (Exception x) {
+            x.printStackTrace();
+        }
 
 
 

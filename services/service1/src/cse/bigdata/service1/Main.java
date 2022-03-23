@@ -22,11 +22,11 @@ public class Main {
         TTransport transport;
         while (true){
             try {
-                transport = new TSocket("192.168.1.118", 9090);
+                transport = new TSocket("127.0.0.1", 9090);
                 transport.open();
             }catch (Exception e){
                 System.out.println("Connection error");
-                Thread.sleep(300);
+                Thread.sleep(5000);
                 continue;
             }
             TProtocol protocol = new  TBinaryProtocol(transport);

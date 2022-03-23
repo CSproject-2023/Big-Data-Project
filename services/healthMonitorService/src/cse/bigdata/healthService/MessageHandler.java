@@ -19,8 +19,13 @@ public class MessageHandler implements HealthMessage.Iface {
     @Override
     public synchronized void sendHealthMessage(Message message){
         messages.add(message);
+        if (messages.size() % 100== 0)
+            System.out.println(messages.size());
         if(messages.size() == MAX_COUNT){
             //save to Hadoop
+            HadoopSaver saver= new HadoopSaver(messages);
+            messages= new LinkedList<>();
+            new Thread(saver).start();
         }
     }
 }

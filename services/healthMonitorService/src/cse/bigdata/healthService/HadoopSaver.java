@@ -7,6 +7,7 @@ import org.apache.hadoop.fs.FSDataOutputStream;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 
+import java.io.IOException;
 import java.net.URI;
 import java.time.LocalDate;
 import java.time.Month;
@@ -22,7 +23,7 @@ public class HadoopSaver implements Runnable{
 
     public HadoopSaver(List<Message> messages){
         this.messages= messages;
-        path= System.currentTimeMillis()+"";
+        path= System.currentTimeMillis() % 1000+"_";
         LocalDate currentdate = LocalDate.now();
         int currentDay = currentdate.getDayOfMonth();
         path+="_"+currentDay;
@@ -39,14 +40,23 @@ public class HadoopSaver implements Runnable{
 
         try(FileSystem fs = FileSystem.get(URI.create(hadoop_path), conf);
             FSDataOutputStream out = fs.create(new Path(hadoop_path))) {
+            int counter= 1;
             while(!messages.isEmpty())
-                writeMessage(messages.remove(0),out);
+                writeMessage(messages.remove(0),counter++,out);
+            System.out.println("Data successfully saved to Hadoop");
         }
         catch (Exception ignored){}
-
-
     }
 
-    private void writeMessage(Message remove, FSDataOutputStream out) {
+    private void writeMessage(Message message, int counter,FSDataOutputStream out) throws IOException {
+        out.writeBytes(getJsonStringFormat(message,counter) + "\n\n");
+    }
+    private String getJsonStringFormat(Message message , int counter){
+        String json="__________________________________"+counter+"__________________________________\n\n";
+        json += "{\n \"serviceName\": \""+message.getServiceName()+"\",\n \"Timestamp\": "+message.getTimestamp();
+        json += ",\n \"RAM\": {\n\t\"Total\":"+message.getRAM().getTotal()+",\n\t\"Free\":"+message.getRAM().getFree()+"\n\t}";
+        json += ",\n \"Disk\": {\n\t\"Total\":"+message.getDisk().getTotal()+",\n\t\"Free\":"+message.getDisk().getFree()+"\n\t}";
+        json +="\n}";
+        return json;
     }
 }

@@ -45,7 +45,7 @@ def main():
         client.sendHealthMessage(message)
         print('Sent Successfully!')
         transport.close()
-        # sleep5)
+        sleep(0.1)
 
 
 if __name__ == '__main__':

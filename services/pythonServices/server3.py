@@ -28,7 +28,7 @@ def main():
             transport.open()
         except :
             print('Connection error! Trying again...')
-            sleep(1)
+            sleep(3)
             continue
             
 
@@ -45,7 +45,7 @@ def main():
         client.sendHealthMessage(message)
         print('Sent Successfully!')
         transport.close()
-        sleep(0.3)
+        sleep(0.2)
 
 
 if __name__ == '__main__':
