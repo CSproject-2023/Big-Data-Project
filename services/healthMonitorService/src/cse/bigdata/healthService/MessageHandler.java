@@ -21,7 +21,7 @@ public class MessageHandler implements HealthMessage.Iface {
         messages.add(message);
         if (messages.size() % 100== 0)
             System.out.println(messages.size());
-        if(messages.size() == MAX_COUNT){
+        if(messages.size() == 50){
             //save to Hadoop
             HadoopSaver saver= new HadoopSaver(messages);
             messages= new LinkedList<>();

@@ -22,6 +22,7 @@ import org.apache.thrift.transport.TSSLTransportFactory.TSSLTransportParameters;
 
 import java.io.*;
 import java.net.URI;
+import java.util.Scanner;
 //import org.a
 
 public class HealthMonitorServer {
@@ -30,7 +31,12 @@ public class HealthMonitorServer {
 
     public static HealthMessage.Processor processor;
 
+    public static String HADOOP_SERVER_PATH= "hdfs://10.7.160.181:9000/user/BigData/";
+    public static final Scanner sc= new Scanner(System.in);
+
     public static void main(String [] args) throws IOException {
+        System.out.print("Enter HDFS IP: ");
+        HADOOP_SERVER_PATH= sc.next();
         try {
             handler = new MessageHandler();
             processor = new HealthMessage.Processor(handler);
@@ -70,7 +76,7 @@ public class HealthMonitorServer {
 
     public static void simple(HealthMessage.Processor processor) {
         try {
-            TServerTransport serverTransport = new TServerSocket(9090);
+            TServerTransport serverTransport = new TServerSocket(3500);
 //            TServer server = new TSimpleServer(new Args(serverTransport).processor(processor));
 
             // Use this for a multithreaded server

@@ -11,7 +11,10 @@ import java.io.IOException;
 import java.net.URI;
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.LinkedList;
 import java.util.List;
+
+import static cse.bigdata.healthService.HealthMonitorServer.HADOOP_SERVER_PATH;
 
 public class HadoopSaver implements Runnable{
 
@@ -19,7 +22,13 @@ public class HadoopSaver implements Runnable{
     private String path;
     private String hadoop_path;
 
-    private static String HADOOP_SERVER_PATH= "hdfs://localhost:9000/user/BigData/";
+
+    public static void main(String[] args) {
+        LinkedList<Message> messages= new LinkedList<>();
+        messages.add(new Message());
+        HadoopSaver saver= new HadoopSaver(messages);
+        saver.run();
+    }
 
     public HadoopSaver(List<Message> messages){
         this.messages= messages;
@@ -45,7 +54,10 @@ public class HadoopSaver implements Runnable{
                 writeMessage(messages.remove(0),counter++,out);
             System.out.println("Data successfully saved to Hadoop");
         }
-        catch (Exception ignored){}
+        catch (Exception ignored){
+            System.out.println("Error");
+            ignored.printStackTrace();
+        }
     }
 
     private void writeMessage(Message message, int counter,FSDataOutputStream out) throws IOException {
