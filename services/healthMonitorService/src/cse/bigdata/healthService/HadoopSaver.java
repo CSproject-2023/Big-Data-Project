@@ -1,6 +1,8 @@
 package cse.bigdata.healthService;
 
+import healthMessage.DiskData;
 import healthMessage.Message;
+import healthMessage.RamData;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FSDataInputStream;
 import org.apache.hadoop.fs.FSDataOutputStream;
@@ -25,7 +27,7 @@ public class HadoopSaver implements Runnable{
 
     public static void main(String[] args) {
         LinkedList<Message> messages= new LinkedList<>();
-        messages.add(new Message());
+        messages.add(new Message("Hello","World",2.5,new RamData(45,25),new DiskData(45,222)));
         HadoopSaver saver= new HadoopSaver(messages);
         saver.run();
     }
@@ -46,13 +48,14 @@ public class HadoopSaver implements Runnable{
     @Override
     public void run() {
         Configuration conf = new Configuration();
-
+        long currentTime= System.currentTimeMillis();
         try(FileSystem fs = FileSystem.get(URI.create(hadoop_path), conf);
             FSDataOutputStream out = fs.create(new Path(hadoop_path))) {
             int counter= 1;
             while(!messages.isEmpty())
                 writeMessage(messages.remove(0),counter++,out);
             System.out.println("Data successfully saved to Hadoop");
+            System.out.println("Total time: "+(System.currentTimeMillis()-currentTime));
         }
         catch (Exception ignored){
             System.out.println("Error");

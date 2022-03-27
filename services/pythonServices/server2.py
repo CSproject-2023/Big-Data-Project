@@ -14,10 +14,11 @@ RAM_MAX_SIZE= 6
 DISK_MAX_SIZE=800
 SERVICE_NAME= 'Server2'
 def main():
-    # Make socket
+    
+    health_ip= input('Please enter ip of health server:')
     while True:
         try :
-            transport = TSocket.TSocket('localhost', 9090)
+            transport = TSocket.TSocket(health_ip, 3500)
             # Buffering is critical. Raw sockets are very slow
             transport = TTransport.TBufferedTransport(transport)
             # Wrap in a protocol

@@ -31,12 +31,12 @@ public class HealthMonitorServer {
 
     public static HealthMessage.Processor processor;
 
-    public static String HADOOP_SERVER_PATH= "hdfs://10.7.160.181:9000/user/BigData/";
+    public static String HADOOP_SERVER_PATH= "hdfs://127.0.0.1:9000/user/BigData/";
     public static final Scanner sc= new Scanner(System.in);
 
     public static void main(String [] args) throws IOException {
-        System.out.print("Enter HDFS IP: ");
-        HADOOP_SERVER_PATH= sc.next();
+//        System.out.print("Enter HDFS IP: ");
+//        HADOOP_SERVER_PATH= sc.next();
         try {
             handler = new MessageHandler();
             processor = new HealthMessage.Processor(handler);
@@ -54,24 +54,6 @@ public class HealthMonitorServer {
 
 
 
-    }
-
-    public void readFromHDFS() throws IOException {
-        String uri = "hdfs://localhost:9000/user/input/xxx.txt";
-
-        Configuration conf = new Configuration();
-        FileSystem fs = FileSystem.get(URI.create(uri), conf);
-        FSDataInputStream in = null ;
-
-        try
-        {
-            in = fs.open(new Path(uri));
-            IOUtils.copyBytes(in, System.out, 4096, false);
-        }
-        finally
-        {
-            IOUtils.closeStream(in);
-        }
     }
 
     public static void simple(HealthMessage.Processor processor) {

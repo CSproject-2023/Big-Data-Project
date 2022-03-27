@@ -10,6 +10,7 @@ import org.apache.thrift.protocol.TProtocol;
 
 import java.sql.Timestamp;
 import java.util.Random;
+import java.util.Scanner;
 
 
 public class Main {
@@ -20,9 +21,11 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
         TTransport transport;
+        System.out.print("Enter health server IP: ");
+        String ip= new Scanner(System.in).next();
         while (true){
             try {
-                transport = new TSocket("127.0.0.1", 9090);
+                transport = new TSocket(ip, 3500);
                 transport.open();
             }catch (Exception e){
                 System.out.println("Connection error");
