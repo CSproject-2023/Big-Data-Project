@@ -2,8 +2,6 @@ package cse.bigdata.healthService;
 
 import healthMessage.HealthMessage;
 import healthMessage.Message;
-import org.apache.thrift.TException;
-
 import java.util.LinkedList;
 import java.util.List;
 

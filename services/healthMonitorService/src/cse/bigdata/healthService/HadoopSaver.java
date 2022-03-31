@@ -48,6 +48,8 @@ public class HadoopSaver implements Runnable{
     @Override
     public void run() {
         Configuration conf = new Configuration();
+        conf.set("fs.hdfs.impl", org.apache.hadoop.hdfs.DistributedFileSystem.class.getName());
+        conf.set("fs.file.impl", org.apache.hadoop.fs.LocalFileSystem.class.getName());
         long currentTime= System.currentTimeMillis();
         try(FileSystem fs = FileSystem.get(URI.create(hadoop_path), conf);
             FSDataOutputStream out = fs.create(new Path(hadoop_path))) {

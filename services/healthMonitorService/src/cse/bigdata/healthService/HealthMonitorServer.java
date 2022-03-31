@@ -31,7 +31,7 @@ public class HealthMonitorServer {
 
     public static HealthMessage.Processor processor;
 
-    public static String HADOOP_SERVER_PATH= "hdfs://127.0.0.1:9000/user/BigData/";
+    public static String HADOOP_SERVER_PATH= "hdfs://h-primary:9000/user/BigData/";
     public static final Scanner sc= new Scanner(System.in);
 
     public static void main(String [] args) throws IOException {
