@@ -1,0 +1,29 @@
+/*
+   CSS styling examples for the Vaadin app.
+   Visit https://vaadin.com/docs/flow/theme/theming-overview.html and
+   https://vaadin.com/themes/lumo for more information.
+*/
+
+/* Example: CSS class name to center align the content . */
+.centered-content {
+  margin: 0 auto;
+  width: 100em;
+}
+
+.serviceName{
+  font-family: sans-serif;
+  font-size: 20pt;
+  color:#aa2394;
+  list-style-type: none;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.serviceData{
+  font-size: 14pt;
+  font-family: Monospaced, serif;
+  color: cornflowerblue;
+  position: center;
+  margin-left: 20em;
+}
+
