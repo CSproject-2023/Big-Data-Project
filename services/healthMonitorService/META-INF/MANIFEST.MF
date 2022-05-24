@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Main-Class: cse.bigdata.healthService.Main
+Class-Path: cse.bigdata.healthService.Main
+
