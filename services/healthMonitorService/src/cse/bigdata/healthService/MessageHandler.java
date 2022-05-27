@@ -17,6 +17,7 @@ public class MessageHandler implements HealthMessage.Iface {
     @Override
     public synchronized void sendHealthMessage(Message message){
         messages.add(message,System.currentTimeMillis());
+        MessageSender.sendToSpeedLayer(message);
         if (messages.messages.size() % 100== 0)
             System.out.println(messages.messages.size());
         if(messages.messages.size() == MAX_COUNT){

@@ -19,11 +19,14 @@ import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.page.Page;
+import com.vaadin.flow.component.timepicker.TimePicker;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.PWA;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Locale;
 
 @Route
@@ -52,9 +55,15 @@ public class MainView extends VerticalLayout  {
         // Button click listeners can be defined as lambda expressions
         Locale finnishLocale = new Locale("EN", "EGYPT");
         DatePicker startDateTimePicker = new DatePicker("Start date ");
+        TimePicker startTime = new TimePicker("Start time");
         DatePicker endDateTimePicker = new DatePicker("End date");
+        TimePicker endTime = new TimePicker("End Time");
         startDateTimePicker.setPlaceholder("MM/DD/YYYY");
         endDateTimePicker.setPlaceholder("MM/DD/YYYY");
+        startTime.setPlaceholder("HH:MM");
+        endTime.setPlaceholder("HH:MM");
+        startTime.setStep(Duration.ofMinutes(15));
+        endTime.setStep(Duration.ofMinutes(15));
         endDateTimePicker.setLocale(finnishLocale);
 
 
@@ -79,9 +88,11 @@ public class MainView extends VerticalLayout  {
             button.getStyle().set("backgroundColor","red");
             LocalDate start = startDateTimePicker.getValue();
             LocalDate end =endDateTimePicker.getValue();
+            LocalTime timeBegin = startTime.getValue();
+            LocalTime timeEnd = endTime.getValue();
             Notification notification = new Notification();
             // System.out.println(start+"-----"+end);
-            if (start == null || end ==null ){
+            if (start == null || end ==null ||timeBegin==null ||timeEnd==null){
 
                 System.out.println("enteredd ");
                 Notification notif = new Notification();
@@ -108,10 +119,14 @@ public class MainView extends VerticalLayout  {
                 int startDay = start.getDayOfMonth();
                 int endDay = end.getDayOfMonth();
                 int endMonth = end.getMonthValue();
-                // System.out.println(startDay+" "+startMonth+" "+endDay+" "+endMonth);
+                int startHR=timeBegin.getHour();
+                int startMI = timeBegin.getMinute();
+                int endHR=timeEnd.getHour();
+                int endMI = timeEnd.getMinute();
+//                 System.out.println("hr "+startHR+"min "+startMI);
                 int startDayYear = startDay+(startMonth-1)*30;
                 int endDayYear = endDay+(endMonth-1)*30;
-                String data = analysis.getData(startDayYear, endDayYear);
+                String data = analysis.getData(startDayYear, endDayYear,startHR,startMI,endHR,endMI);
                 String[] records= data.split("\n");
 //                ListItem item= new ListItem("Hello World");
 //                item.add(new ListItem("Hello again"));
@@ -120,13 +135,13 @@ public class MainView extends VerticalLayout  {
                 add(new Label("____________________________________________________________________"));
                 for(String record:records){
                     String recData=  record ;
-                    String serviceName= recData.split(":")[0];
+                    String serviceName= recData.split(",")[0];
                     ListItem label =new ListItem(serviceName);
                     label.setClassName("serviceName");
                     label.setWidth("80em");
                     add(label);
 
-                    String[] dataOfService= record.split(" ");
+                    String[] dataOfService= record.split(",");
                     for(int i= 1 ;i<dataOfService.length; i++){
                         String util= dataOfService[i];
                         ListItem item= new ListItem(util);
@@ -150,7 +165,7 @@ public class MainView extends VerticalLayout  {
 
 
 
-        add(startDateTimePicker,endDateTimePicker);
+        add(startDateTimePicker,startTime,endDateTimePicker,endTime);
         add(button,l);
 
     }
